@@ -53,12 +53,17 @@ create table `Child` (
     foreign key(`pid`) references `Parent` (`pid`)
 );
 
+
+
+
+#실습 2-6
 insert into `Parent` values ('p101', '이성계', '010-1234-1111');
 insert into `Child` values ('c101', '이방원', '010-1234-1001', 'p101');
 
 
 
-#실습 2-6
+
+#실습 2-7
 create table `user4` (
 	`seq`		int primary key auto_increment,
 	`name`		varchar(10),
@@ -67,15 +72,16 @@ create table `user4` (
     `addr`		varchar(255)
 );
 
+
+
+#실습 2-8
 insert into `User4` (`name`, `gender`, `age`, `addr`) values ('김유진', 1, 25, '김해시');
 insert into `User4` (`name`, `gender`, `age`, `addr`) values ('김춘추', 1, 23, '경주시');
 insert into `User4` (`name`, `gender`, `age`, `addr`) values ('심사인당', 2, 27, '강릉시');
 delete from `User4` where `name`='심사인당';
 
 
-
-#실습 2-7
-
+#실습 2-9
 create table `user5` (
 	`name`		varchar(10) NOT NULL,
 	`gender`	tinyint,
@@ -83,12 +89,13 @@ create table `user5` (
     `addr`		varchar(255)
 );
 
+
+
+#실습 2-10
 insert into	`User5` set `name` = '김유신';
 insert into	`User5` set `name`='김춘추', `addr` = '부산시';
 
-#실습 2-8
-#실습 2-9
-#실습 2-10
+
 #실습 2-11
 #실습 2-12
 #실습 2-13
