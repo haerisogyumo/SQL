@@ -4,7 +4,7 @@
 
 
 #실습 2-1
-user2user1user2create table `User2` (
+create table `User2` (
 		`uid`	VARCHAR(20) primary key,
         `name`	VARCHAR(10),
         `hp`	CHAR(13),
@@ -97,8 +97,26 @@ insert into	`User5` set `name`='김춘추', `addr` = '부산시';
 
 
 #실습 2-11
+alter table `User5` add `hp` varchar(20);
+alter table `User5` add `birth` char(10) default '0000-00-00' after `name`;
+alter table `User5` add `uid` varchar(10) first;
+
+
+
 #실습 2-12
+alter table `User5` modify `hp` char(13);
+alter table `User5` modify `age` tinyint;
+
+
 #실습 2-13
+alter table `User5` change column `addr` `address` varchar(100);
+
+
 #실습 2-14
+ALTER TABLE `User5` DROP `gender`;
+
 #실습 2-15
+create table `User6` like `User5`;
+
 #실습 2-16
+insert into `User6` select*from `User5`;
