@@ -133,15 +133,195 @@ limit 5;
 
 
 #실습 4-6
+select sum(`sale`) as `합계` from `Sales`;
+select count(*) as `갯수` from `Sales`;
+select avg(`sale`) as `평균` from `Sales`;
+select max(`sale`) as `최대값` from `Sales`;
+select min(`sale`) as `최소값` from `Sales`;
+
+select substring(`hp`, 10, 4) as `전화번호 끝자리` from `Member`;
+insert into `Member` values ('b101', '을지문덕','010-5555-1234','사장',107, Now());
+
+
+
+
 #실습 4-7
+select sum(`sale`) as `2018년 1월 매출 총합` from `Sales` where `year`=2018 and `month`=1 ;
+
+
+
+
+
 #실습 4-8
+select 
+		sum(`sale`) as `총합`,
+        avg(`sale`) as `평균`
+	from 
+		`Sales` 
+	where 
+		`year`=2019 and 
+        `month`=2 and 
+        `sale` >= 50000;
+
+
+
+
 #실습 4-9
+select
+	min(`sale`) as `최저`,
+    max(`sale`) as `최고`
+from 
+	`Sales`
+where
+	`year` in(2020);
+
+
+
+
 #실습 4-10
-#실습 4-1
+select * from `Sales` group by `uid`;
+select * from `Sales` group by `year`;
+select * from `Sales` group by `uid`,`year`;
+select `uid`, count(`seq`) as `건수` from `Sales` group by `uid`;
+select `uid`, sum(`sale`) as `합계` from `Sales` group by `uid`;
+select `uid`, Avg(`sale`) as `평균` from `Sales` group by `uid`;
+
+select 
+		`uid`,
+        `year`,
+        sum(`sale`)as `합계`
+from `Sales`
+where `sale` >= 50000
+group by `uid`, `year`
+order by `합계` desc
+limit 3;
+;
+
+
+
+
+
+
 #실습 4-11
+select `uid`, sum(`sale`) as `합계` 
+from `Sales` 
+group by `uid`
+having `합계` >= 200000;
+
+select `uid`, `year`, sum(`sale`) as `합계` 
+from `Sales`
+where `sale` >= 100000
+group by `uid`, `year`
+having `합계` >= 200000
+order by `합계` desc;
+
+
+
+
 #실습 4-12
-#실습 4-13
-#실습 4-14
+create table `Sales2` like `Sales`;
+insert into `Sales2` select * from `Sales`;
+update `Sales2` set `year` = `year` + 3;
+
+select * from `Sales` union select * from `Sales2`;
+(select * from `Sales`) union (select * from `Sales2`);
+
+select `uid`, `year`, `sale` from `Sales`
+union
+select `uid`, `year`, `sale` from `Sales2` ;
+
+(select `uid`, `year`, sum(`sale`) as `합계`
+from `sales`
+group by `uid`, `year`)
+union
+(select `uid`, `year`, sum(`sale`) as `합계`
+from `sales2`
+group by `uid`, `year`)
+order by `year` asc, `합계` desc;
+
+
+
+#실습 4-13 - 테이블 합치기,(공통된 콜럼이 필요함) - 내부조인
+select * from `Sales` inner join `Member` on Sales.uid = Member.uid;
+select * from `Member` inner join `Department` On Member.dep = department.depNo;
+
+select * from `Sales` as a 
+join `Member` as b
+on a.uid = b.uid;
+
+select 
+	`seq`, a.`uid`, `name`, `pos`
+from `Sales` as a
+join `Member` as b
+on a.uid = b.uid;
+
+select 
+	`seq`, a.`uid`, `name`, `pos`
+from `Sales` as a
+join `Member` as b
+using(`uid`);
+
+select * from `Sales` as a
+join `Member` as b on a.uid=b.uid
+join `Department` as c on b.dep = c.depNo;
+
+
+
+###########질문하기 왜 null이 나오나여
+#실습 4-14 - 외부조인
+select * from `Sales` as a 
+left join `Member` as b
+on a.uid = b.uid;
+ 
+select * from `Sales` as a 
+right join `Member` as b
+on a.uid = b.uid;
+ 
+
+
+
 #실습 4-15
+select 
+	a.`uid`,
+    a.`name`,
+    a.`pos`,
+    b.`name`
+from `Member` as a
+join `Department` as b
+on a.dep = b.depNo;
+ ;
+
+
+
+
 #실습 4-16
+select sum(`sale`) as `김유신 2019 매출 합`
+from `Sales` as a 
+join `Member` as b
+on a.uid = b.uid
+where `name` = '김유신' and `year` = 2019
+;
+
+
+
 #실습 4-17
+select 	
+	b.`name`,
+    c.`name`,
+    b.`pos`,
+    a.`year`,
+	sum(`sale`) as `매출합`
+from `Sales` as a
+join `Member` as b on a.uid = b.uid
+join `Department` as c on b.dep = c.depNo
+
+where `year` = 2019 and `sale` >= 50000
+group by a.`uid`
+having `매출합` >= 100000
+order by `매출합` desc;
+;
+
+
+
+
+
